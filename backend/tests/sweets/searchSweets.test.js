@@ -22,8 +22,13 @@ describe("GET /api/sweets/search", () => {
             role: "user"
         });
 
+        // Create test sweets for all search scenarios
         await Sweet.create([
-            { name: "Gulab Jamun", category: "Milk", price: 25, quantity: 100 }
+            { name: "Gulab Jamun", category: "Milk", price: 10, quantity: 5 },
+            { name: "Kaju Katli", category: "Dry", price: 20, quantity: 10 },
+            { name: "Cheap Sweet", category: "Milk", price: 5, quantity: 5 },
+            { name: "Expensive Sweet", category: "Dry", price: 50, quantity: 5 },
+            { name: "Special Barfi", category: "Milk", price: 15, quantity: 5 }
         ]);
 
         const res = await request(app)
@@ -37,11 +42,53 @@ describe("GET /api/sweets/search", () => {
         await mongoose.connection.close();
     });
 
-    it("searches sweets by name", async () => {
+    // Search by Name
+    it("returns sweets matching name", async () => {
         const res = await request(app)
             .get("/api/sweets/search?name=gulab")
             .set("Cookie", userCookie);
 
         expect(res.statusCode).toBe(200);
+        expect(res.body.length).toBeGreaterThan(0);
+        expect(res.body[0].name).toMatch(/gulab/i);
+    });
+
+    // Filter by Category
+    it("filters sweets by category", async () => {
+        const res = await request(app)
+            .get("/api/sweets/search?category=Dry")
+            .set("Cookie", userCookie);
+
+        expect(res.statusCode).toBe(200);
+        expect(res.body.length).toBe(2); // Kaju Katli & Expensive Sweet
+        expect(res.body.every(s => s.category === "Dry")).toBe(true);
+    });
+
+    // 3Filter by Price Range
+    it("filters sweets within price range", async () => {
+        const res = await request(app)
+            .get("/api/sweets/search?minPrice=1&maxPrice=10")
+            .set("Cookie", userCookie);
+
+        expect(res.statusCode).toBe(200);
+        expect(res.body.every(s => s.price <= 10)).toBe(true);
+    });
+
+    // Combined Filters (Name + Category + Price)
+    it("applies multiple filters together", async () => {
+        const res = await request(app)
+            .get("/api/sweets/search?name=barfi&category=Milk&maxPrice=20")
+            .set("Cookie", userCookie);
+
+        expect(res.statusCode).toBe(200);
+        expect(res.body.length).toBe(1);
+        expect(res.body[0].name).toBe("Special Barfi");
+    });
+
+    // Unauthenticated request
+    it("rejects unauthenticated search", async () => {
+        const res = await request(app).get("/api/sweets/search?name=gulab");
+
+        expect(res.statusCode).toBe(401);
     });
 });
