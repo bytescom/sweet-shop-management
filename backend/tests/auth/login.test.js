@@ -2,15 +2,17 @@ import 'dotenv/config';
 import request from "supertest";
 import app from "../../app.js";
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 import User from "../../models/userSchema.js";
 
 describe("POST /api/auth/login", () => {
   beforeAll(async () => {
     await mongoose.connect(process.env.MONGO_URL_TEST);
+    const hashedPassword = await bcrypt.hash("password123", 10);
     await User.create({
       name: "Login User",
       email: "login@test.com",
-      password: "password123"
+      password: hashedPassword
     });
   });
 
