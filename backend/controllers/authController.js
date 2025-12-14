@@ -37,9 +37,10 @@ export const registerUser = async (req, res) => {
       secure: false
     });
 
-    res.status(201).json({ message: "User registered" });
+    // Send response with user data
+    res.status(201).json({message: "User registered",});
   } catch (err) {
-    console.error("Register error:", err.message); // 🧪 log error
+    console.error("Register error:", err.message);
     res.status(400).json({ error: err.message });
   }
 };
@@ -70,7 +71,15 @@ export const loginUser = async (req, res) => {
       secure: false
     });
 
-    res.status(200).json({ message: "Login successful" });
+    res.status(200).json({
+      message: "Login successful",
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      }
+    });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

@@ -24,6 +24,8 @@ describe("POST /api/auth/register", () => {
 
     expect(res.statusCode).toBe(201);
     expect(res.body.message).toBe("User registered");
+    expect(res.body.user).toBeDefined();
+    expect(res.body.user.email).toBe("test@example.com");
   });
 
   it("should not allow duplicate email", async () => {

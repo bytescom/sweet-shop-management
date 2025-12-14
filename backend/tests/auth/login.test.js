@@ -31,6 +31,8 @@ describe("POST /api/auth/login", () => {
 
     expect(res.statusCode).toBe(200);
     expect(res.body.message).toBe("Login successful");
+    expect(res.body.user).toBeDefined();
+    expect(res.body.user.email).toBe("login@test.com");
   });
 
   it("should reject invalid credentials", async () => {

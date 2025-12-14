@@ -8,7 +8,7 @@ router.post('/login', loginUser);
 
 router.post('/logout', (req, res) => {
     res.clearCookie('token');
-    res.redirect('/api/auth/login');
+    res.status(200).json({ message: "Logged out successfully" });
 });
 
 router.get('/dashboard', Protect, (req, res) => {
