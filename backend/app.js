@@ -1,4 +1,5 @@
-const express = require('express')
+import express from 'express'
+
 const app = express()
 const PORT = 3001
 
@@ -10,4 +11,4 @@ app.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}`)
 })
 
-module.exports = app
+export default app
