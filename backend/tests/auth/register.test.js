@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 
 describe("POST /api/auth/register", () => {
   beforeAll(async () => {
-    await mongoose.connect(process.env.MONGO_URL);
+    await mongoose.connect(process.env.MONGO_URL_TEST);
   }, 10000);
 
   afterAll(async () => {
