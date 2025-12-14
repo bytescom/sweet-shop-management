@@ -2,6 +2,8 @@ export default {
   testEnvironment: 'node',
   verbose: true,
   transform: {},
+  maxWorkers: 1,
+  forceExit: true,
   coverageDirectory: 'coverage',
   collectCoverageFrom: [
     '**/*.js',
