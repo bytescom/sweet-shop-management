@@ -8,7 +8,7 @@ import connectDB from './config/db.js'
 import cookieParser from 'cookie-parser'
 
 const app = express()
-const PORT = process.env.PORT || 3001
+const PORT = 3001
 
 if (process.env.NODE_ENV !== 'test') {
   connectDB();

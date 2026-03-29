@@ -9,7 +9,7 @@ describe("POST /api/sweets", () => {
     let adminCookie;
 
     beforeAll(async () => {
-        await mongoose.connect(process.env.MONGO_URL_TEST);
+        await mongoose.connect(process.env.MONGODB_URI_TEST);
         await User.deleteMany({});
 
         const hash = await bcrypt.hash("admin123", 10);

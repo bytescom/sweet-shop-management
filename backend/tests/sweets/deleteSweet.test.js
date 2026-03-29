@@ -11,7 +11,7 @@ describe("DELETE /api/sweets/:id", () => {
     let userCookie;
 
     beforeAll(async () => {
-        await mongoose.connect(process.env.MONGO_URL_TEST);
+        await mongoose.connect(process.env.MONGODB_URI_TEST);
         await User.deleteMany({});
         await Sweet.deleteMany({});
 

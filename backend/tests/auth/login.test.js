@@ -7,7 +7,7 @@ import User from "../../models/userSchema.js";
 
 describe("POST /api/auth/login", () => {
   beforeAll(async () => {
-    await mongoose.connect(process.env.MONGO_URL_TEST);
+    await mongoose.connect(process.env.MONGODB_URI_TEST);
     const hashedPassword = await bcrypt.hash("password123", 10);
     await User.create({
       name: "Login User",

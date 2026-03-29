@@ -141,8 +141,8 @@ sweet-shop-management/
    ```env
    NODE_ENV=development
    PORT=3001
-   MONGO_URL=mongodb://localhost:27017/sweet-shop
-   MONGO_URL_TEST=mongodb://localhost:27017/sweet-shop-test
+   MONGODB_URI=mongodb://localhost:27017/sweet-shop
+   MONGODB_URI_TEST=mongodb://localhost:27017/sweet-shop-test
    JWT_SECRET=your_super_secret_jwt_key_here
    ```
 
